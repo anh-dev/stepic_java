@@ -1,7 +1,10 @@
 package servlets;
 
 import accounts.AccountService;
-import accounts.UserProfile;
+import database.DBException;
+import database.DBService;
+import dataset.UserDataSet;
+import main.Main;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,9 +31,17 @@ public class SignInServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         }
-        UserProfile userProfile = accountService.getUserByLogin(login);
+//        UserDataSet userProfile = accountService.getUserByLogin(login);
 
-        if (userProfile == null || !userProfile.getPass().equals(pass)){
+        UserDataSet userProfile = null;
+        try {
+            userProfile = Main.dbService.signIn(login, pass);
+        } catch (DBException e) {
+            resp.setContentType("text/html;charset=UTF-8");
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+        System.out.println(userProfile);
+        if (userProfile == null || !userProfile.getPassword().equals(pass)){
             resp.setContentType("text/html;charset=UTF-8");
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             resp.getWriter().print("Unauthorized");

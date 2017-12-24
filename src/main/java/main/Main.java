@@ -1,19 +1,20 @@
 package main;
 
 import accounts.AccountService;
+import database.DBService;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.MirrorServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 
+
 public class Main {
 
-
+    public static DBService dbService = new DBService();
     public static void main(String[] args) throws Exception {
 
         AccountService accountService = new AccountService();
@@ -33,6 +34,6 @@ public class Main {
 
         server.start();
         System.out.println("Server started");
-//        server.join();
+        server.join();
     }
 }

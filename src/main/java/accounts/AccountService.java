@@ -1,29 +1,31 @@
 package accounts;
 
+import dataset.UserDataSet;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class AccountService {
 
-    private Map<String, UserProfile> loginToProfile;
-    private Map<String, UserProfile> sessionToProfile;
+    private Map<String, UserDataSet> loginToProfile;
+    private Map<String, UserDataSet> sessionToProfile;
 
     public AccountService() {
         loginToProfile = new HashMap<>();
         sessionToProfile = new HashMap<>();
     }
 
-    public void addNewUser(UserProfile userProfile){
+    public void addNewUser(UserDataSet userProfile){
         loginToProfile.put(userProfile.getLogin(), userProfile);
     }
 
-    public UserProfile getUserByLogin(String login){
+    public UserDataSet getUserByLogin(String login){
         return loginToProfile.get(login);
     }
-    public void addSession(String sessionId, UserProfile userProfile){
+    public void addSession(String sessionId, UserDataSet userProfile){
         sessionToProfile.put(sessionId, userProfile);
     }
-    public UserProfile getUserBySessionId(String sessionId){
+    public UserDataSet getUserBySessionId(String sessionId){
         return sessionToProfile.get(sessionId);
     }
     public void deleteSession(String sessionId){
